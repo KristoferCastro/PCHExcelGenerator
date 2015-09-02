@@ -2,6 +2,9 @@
 Randomly generate a dataset with a parient-child hiearchy between employees and manager
 
 ## How to run
+
+install XlsxWriter: http://xlsxwriter.readthedocs.org/en/latest/getting_started.html
+
 1. cd to directory
 2. execute command "python PCHExcelGenerator.py"
 3. input parameters that is asked
