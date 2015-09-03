@@ -13,6 +13,7 @@ class Employee:
 		self.sales = self.generateSalesNumber();
 		self.manager = manager;
 		self.id = self.generateId();
+		self.employeesManaging = [];
 
 	def getFullName(self):
 		return self.firstName + " " + self.lastName;
@@ -30,7 +31,6 @@ class Employee:
 		return self.firstName + "." + self.lastName + str(random.randrange(0,10));
 
 	def addEmployeeToManage(self, employee):
-		employee.manager = self;
 		self.employeesManaging.append(employee);
 
 	def __repr__(self):

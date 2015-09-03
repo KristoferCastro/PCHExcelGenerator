@@ -76,6 +76,7 @@ class PCHExcelGenerator:
 			self.createLevelsForEmployee(employee);
 
 	def createRandomEmployee(self, manager=None):
+
 		firstName = self.generateRandomFirstName();
 		lastName = self.generateRandomLastName();
 		newEmployee = Employee(firstName, lastName, manager);
@@ -91,12 +92,23 @@ class PCHExcelGenerator:
 		self.writeToExcel(newEmployee);
 		return newEmployee;
 
+			# create a random number of employee the given employee has to manage
+	def createEmployeesToManage(self, employee):
+		randNumChild = random.randrange(self.MIN_CHILD_PER_NODE, self.MAX_CHILD_PER_NODE+1);
+		numChildAlready = len(employee.employeesManaging);
+		if(numChildAlready>0) : print ("{0} already managing : {1}".format(employee, employee.employeesManaging));
+		for x in range (numChildAlready, randNumChild):
+			newEmployeeToManage = self.createRandomEmployeeToManage(employee);
+			employee.addEmployeeToManage(newEmployeeToManage);
+
+
 	#create root employees that we will generate random amount of levels in
 	def createSelectedEmployees(self):
 		numOfRootEmployees = len(self.rootEmployees);
 		numToSelect = self.NUM_ROOT_NODES_WITH_RANDOM_LEVELS;
 		allEmployeesIndex = [];
 		allSelectedEmployees = [];
+		if ( numToSelect == 0 ): return allSelectedEmployees;
 		if (numOfRootEmployees == numToSelect): return self.rootEmployees;
 
 		# first make an array to keep track of index when we move things around
@@ -123,24 +135,22 @@ class PCHExcelGenerator:
 		numOfLevels = random.randrange(self.MIN_LEVEL, self.MAX_LEVEL+1);
 		if (numOfLevels == 0 ): return; # do nothing since level 0 is just the node itself
 		lastManager = employee;
-
+		startingLevel = 0;
+		# case where start node already has children then we already have a level
+		if (len(lastManager.employeesManaging) > 0):
+			lastManager = lastManager.employeesManaging[0];
+			startingLevel = 1
+			if (numOfLevels == 1): return; 
+		
 		nextLevelEmployee = self.createRandomEmployee(lastManager);
 		lastManager.addEmployeeToManage(nextLevelEmployee);
 		lastManager = nextLevelEmployee;
 		if (numOfLevels == 1 ): return; # we done
 
-		for x in range (0, numOfLevels-1):
+		for x in range (startingLevel, numOfLevels-1):
 			nextLevelEmployee = self.createRandomEmployee(lastManager);
 			lastManager.addEmployeeToManage(nextLevelEmployee);
 			lastManager = nextLevelEmployee;
-
-	# create a random number of employee the given employee has to manage
-	def createEmployeesToManage(self, employee):
-		randNumChild = random.randrange(self.MIN_CHILD_PER_NODE, self.MAX_CHILD_PER_NODE+1);
-		numChildAlready = len(employee.employeesManaging);
-		for x in range (numChildAlready, randNumChild):
-			newEmployeeToManage = self.createRandomEmployeeToManage(employee);
-			employee.addEmployeeToManage(newEmployeeToManage);
 
 	def generateRandomFirstName(self):
 		length = len(self.firstNameDatabase);
