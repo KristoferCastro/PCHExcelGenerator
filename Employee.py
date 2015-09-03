@@ -1,4 +1,6 @@
 import random
+import uuid;
+
 class Employee:
 	id = "";
 	firstName = "";
@@ -28,7 +30,7 @@ class Employee:
 		self.maxManageEmployee = max;
 
 	def generateId(self):
-		return self.firstName + "." + self.lastName + str(random.randrange(0,10));
+		return self.firstName + "." + self.lastName + "-" + str(uuid.uuid4())[:8];
 
 	def addEmployeeToManage(self, employee):
 		self.employeesManaging.append(employee);
