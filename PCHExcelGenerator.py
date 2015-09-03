@@ -72,6 +72,7 @@ class PCHExcelGenerator:
 			newEmployee = self.createRandomEmployee();
 			self.rootEmployees.append(newEmployee);
 		selectedEmployees = self.createSelectedEmployees();
+		self.rootEmployees = None;
 		for employee in selectedEmployees:
 			self.createLevelsForEmployee(employee);
 
@@ -103,7 +104,6 @@ class PCHExcelGenerator:
 	def createEmployeesToManage(self, employee):
 		randNumChild = random.randrange(self.MIN_CHILD_PER_NODE, self.MAX_CHILD_PER_NODE+1);
 		numChildAlready = len(employee.employeesManaging);
-		if(numChildAlready>0) : print ("{0} already managing : {1}".format(employee, employee.employeesManaging));
 		for x in range (numChildAlready, randNumChild):
 			newEmployeeToManage = self.createRandomEmployeeToManage(employee);
 			employee.addEmployeeToManage(newEmployeeToManage);
@@ -148,12 +148,8 @@ class PCHExcelGenerator:
 			lastManager = lastManager.employeesManaging[0];
 			startingLevel = 1;
 			if (numOfLevels == 1): return; 
-	
-		nextLevelEmployee = self.addALevelForEmployee(lastManager);
-		lastManager = nextLevelEmployee;
-		if (numOfLevels == 1 ): return; # we done
 
-		for x in range (startingLevel, numOfLevels-1):
+		for x in range (0, numOfLevels-startingLevel):
 			nextLevelEmployee = self.addALevelForEmployee(lastManager);
 			lastManager = nextLevelEmployee;
 
@@ -169,7 +165,7 @@ class PCHExcelGenerator:
 		isFull = True if numOfChildren >= randNumChild else False;
 		if(isFull): return;
 		numChildrenToMake = randNumChild-numOfChildren;
-		for x in (0, numChildrenToMake):
+		for x in range(0, numChildrenToMake):
 			newEmployee = self.createRandomEmployeeNotAManager(employee);
 			employee.addEmployeeToManage(newEmployee);
 
