@@ -154,7 +154,7 @@ class PCHExcelGenerator:
 		if (numOfLevels == 1 ): return; # we done
 
 		for x in range (startingLevel, numOfLevels-1):
-			nextLevelEmployee = addALevelForEmployee(lastManager);
+			nextLevelEmployee = self.addALevelForEmployee(lastManager);
 			lastManager = nextLevelEmployee;
 
 	def addALevelForEmployee(self,  manager):
