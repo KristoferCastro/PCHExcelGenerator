@@ -209,7 +209,7 @@ numRootNodes = input("Enter # of root nodes: ");
 while not numRootNodes.isdigit(): numRootNodes = input("\tEnter again.  Must be a digit: ");
 
 numRootNodesWithRandomLevels = input("Enter # of root nodes with random # of levels: ");
-while not numRootNodesWithRandomLevels.isdigit() or numRootNodesWithRandomLevels > numRootNodes:
+while not numRootNodesWithRandomLevels.isdigit() or int(numRootNodesWithRandomLevels) > int(numRootNodes):
 	numRootNodesWithRandomLevels = input("Enter again.  Must be a digit and less than {0}:".format(numRootNodes));
 
 minLevel = input("Enter the minimum # of levels for the random root node: ");
