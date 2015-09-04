@@ -30,7 +30,7 @@ class Employee:
 		self.maxManageEmployee = max;
 
 	def generateId(self):
-		return self.firstName + "." + self.lastName + "-" + str(uuid.uuid4())[:8];
+		return self.firstName + "." + self.lastName + "-" + str(uuid.uuid4())[:4];
 
 	def addEmployeeToManage(self, employee):
 		self.employeesManaging.append(employee);
